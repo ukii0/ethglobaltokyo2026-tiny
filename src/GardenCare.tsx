@@ -4,7 +4,7 @@ import { ArrowUpRight, Check, Droplets, Flower2, Heart, Leaf, Pencil, Sprout as 
 import { careSummary, growthStages, type GrowthId, type PotId, type Sprout } from './gardenModel';
 
 export function PlantArt({ pot, small = false, growing = false, growth = 'leafy' }: { pot: PotId; small?: boolean; growing?: boolean; growth?: GrowthId }) {
-  const artwork = { paper: '/images/sprout.png', pebble: '/images/sprout-pebble.png', sunshine: '/images/sprout-sunshine.png' }[pot];
+  const artwork = `${import.meta.env.BASE_URL}images/${{ paper: 'sprout.png', pebble: 'sprout-pebble.png', sunshine: 'sprout-sunshine.png' }[pot]}`;
   return <div className={`plant-art plant-art--${pot} growth-${growth} ${small ? 'plant-art--small' : ''} ${growing ? 'plant-art--growing' : ''}`} aria-hidden="true">
     <img className="plant-base" src={artwork} alt="" width="1254" height="1254" draggable="false"/>
     <img className="plant-canopy" src={artwork} alt="" width="1254" height="1254" draggable="false"/>

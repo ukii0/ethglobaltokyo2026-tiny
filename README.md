@@ -89,3 +89,9 @@ Base Sepolia is a test network. Each write requires a wallet approval and test E
 - [UI guide](./DESIGN.md)
 
 Caveat and DM Sans are bundled through Fontsource under their respective licenses. The sprout illustration is AI-generated. Code and design implementation were assisted by Codex.
+
+## GitHub Pages
+
+The site is published at https://ukii0.github.io/ethglobaltokyo2026-tiny/ by `.github/workflows/deploy.yml` on pushes to `main`. The workflow runs tests and builds the app for the repository subpath.
+
+Set the repository Actions variable `VITE_GARDEN_CONTRACT_ADDRESS` to the deployed Base Sepolia contract address and rerun the workflow to share the same garden contract with all visitors. Until configured, the site opens with the contract setup flow; website deployment does not deploy the smart contract.
