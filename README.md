@@ -1,97 +1,135 @@
 # Tiny Sprout
 
-A tiny onchain garden for small daily rituals. Choose a pot, name your sprout, and water it on different days to grow new leaves and a flower.
+**A little care. A little growth.**
 
-## What it does
+A tiny onchain garden that turns daily care into a growing plant. Choose a pot, name your sprout, and return each day to water it. Your wallet owns the garden, and a smart contract keeps its care history.
 
-- Connect an Ethereum browser wallet; its address is the garden account.
-- Plant one sprout per wallet, with a pot style and a name.
-- Save planting, watering, and name changes through signed transactions.
-- Water once per UTC day, enforced by the contract using block time.
-- Read care history, current/best streaks, and growth at 3 and 7 care days.
-- Restore the same garden from another browser using the same wallet and contract.
-- Show wallet approval, pending confirmation, confirmed transactions, and explorer links.
+[Open the app](https://ukii0.github.io/ethglobaltokyo2026-tiny/) · [Product plan](./PROJECT_PLAN.md) · [Design guide](./DESIGN.md)
 
-A missed day resets the current streak, not accumulated growth. Growth previews never write to the contract. There is no NFT, trading, email login, deposit, or administrator.
+![Tiny Sprout](./submission-assets/cover.png)
 
-## Architecture
+## How it works
+
+1. **Make it yours.** Connect an Ethereum browser wallet, choose Paper, Pebble, or Sunshine, and name your sprout.
+2. **Water daily.** Approve one watering transaction per UTC day.
+3. **Watch it grow.** Reach new leaves after 3 care days and a flower after 7. Each pot has its own illustration and flower.
+
+Track recent watering, your current streak, and your longest streak in the care journal. Missing a day breaks the streak but preserves accumulated growth. Reconnecting the same wallet to the same contract restores your garden.
+
+## Project status
+
+The frontend is live on GitHub Pages. The contract and wallet flows have been tested on a local EVM. A shared Base Sepolia contract address still needs to be configured for the public app; until then, it displays the contract setup flow.
+
+This version includes one plant per wallet, name changes, daily watering, growth stages, and care history. NFT minting, trading, friends, shared gardens, and rankings are outside its scope.
+
+## Tech stack
+
+| Layer | Technology |
+| --- | --- |
+| Frontend | React, TypeScript, Vite |
+| Wallet and chain access | viem, injected Ethereum wallets |
+| Smart contract | Solidity 0.8.30, targeting Base Sepolia |
+| Local blockchain | Ganache |
+| Testing | Node.js test runner, tsx |
+| Hosting | GitHub Pages and GitHub Actions |
+| Typography | Caveat and DM Sans via Fontsource |
+
+The blockchain is the backend. There is no application server or database. The contract stores each wallet's pot style, name, planting time, and watering days. It enforces daily watering with block timestamps. The frontend reads those records to calculate growth and streaks.
 
 ```text
-React UI → viem → browser wallet (signatures) → TinySprout contract
-             └→ public RPC (reads and transaction receipts) ─┘
+React interface → viem → browser wallet → TinySprout contract
+                     → public RPC → records and transaction receipts
 ```
 
-The blockchain is the backend and source of truth. No application server or database is required. All garden data is public. Local storage contains connection preferences and pending transaction references, not authoritative garden records. Previous browser-only demo records are left untouched and are not imported as onchain activity.
+Local storage holds connection preferences and pending transaction references. Garden records are read from the contract. The interface shows wallet approval, pending confirmation, and confirmed transaction states, with explorer links.
 
-- `contracts/TinySprout.sol`: wallet ownership, daily watering rules, name validation, paginated history, events.
-- `src/sproutService.ts`: wallet sessions, contract validation, writes, receipt handling, and recovery.
-- `src/chain/readGarden.ts`: consistent garden snapshots at one block.
-- `src/gardenModel.ts`: presentation rules for calendars, streaks, and growth.
-- `scripts/compile.mjs`: reproducible Solidity compilation and generated ABI/bytecode.
+## Run locally
 
-## Run a local blockchain
+Use Node.js 22 and npm. From the project directory:
 
 ```sh
-npm install
+npm ci
 npm run chain:local
 ```
 
-In another terminal:
+In a second terminal:
 
 ```sh
 npm run dev -- --port 5173
 ```
 
-Open [the local app](http://127.0.0.1:5173/). The development chain has actual EVM transactions and disk persistence in `.local-chain/`. Its unlocked test wallet is only for localhost. The app labels this mode **Local blockchain · development only**. Keep both processes running.
+Open [localhost:5173](http://127.0.0.1:5173/). Keep both terminals running.
 
-`chain:local` writes `.env.development.local`. Production builds ignore that development configuration and always target Base Sepolia.
+The local chain uses real EVM transactions with an unlocked development wallet. Its state persists in `.local-chain/`. The startup script writes `.env.development.local`; production builds ignore this local-chain configuration and target Base Sepolia.
 
-## Deploy to Base Sepolia
+## Deploy the contract
 
-Public deployment requires a browser wallet and Base Sepolia test ETH. Private keys and recovery phrases are never entered in this app.
+You need an Ethereum browser wallet and Base Sepolia test ETH.
 
-1. Run `npm run build`, then `npm run preview -- --port 5175`.
-2. Open [the production preview](http://127.0.0.1:5175/) in a browser with MetaMask, Rabby, or another Ethereum wallet.
-3. Select **Set up garden**, connect the wallet, and approve **Deploy garden contract**. The app validates the deployed runtime bytecode before accepting it. Alternatively, enter an existing matching contract address.
-4. Put the resulting public address in `.env.production.local`:
+1. Open the [app](https://ukii0.github.io/ethglobaltokyo2026-tiny/) in a browser with your wallet extension.
+2. Choose **Set up garden**, connect your wallet, and approve **Deploy garden contract**. You can also enter an existing matching contract address.
+3. Copy the deployed contract address. The app checks its runtime bytecode before accepting it.
+4. Configure that address for the website using one of the options below.
 
-   ```dotenv
-   VITE_GARDEN_CONTRACT_ADDRESS=0xYOUR_DEPLOYED_CONTRACT_ADDRESS
-   VITE_GARDEN_RPC_URL=https://sepolia.base.org
-   ```
+An address saved through the setup screen applies only to that browser until included in the site's build configuration. Never enter a private key or recovery phrase in the app.
 
-5. Run `npm run build:submission`. This checks the chain ID and deployed bytecode before creating `dist/`.
-6. Host `dist/` on a static website host. Every visitor uses the configured contract. A contract address saved only through the setup screen applies to that browser until included in the production build.
+### GitHub Pages
 
-[Base network settings](https://docs.base.org/get-started/connect-to-base) · [Free test ETH](https://docs.base.org/get-started/get-funds) · [Base Sepolia explorer](https://sepolia.basescan.org)
+In the repository's **Settings → Secrets and variables → Actions → Variables**, set:
 
-For explorer source verification, compile with Solidity **0.8.30**, optimizer **200 runs**, and EVM target **Shanghai**. `artifacts/compiler-input.json` contains the standard JSON compiler input.
+```text
+VITE_GARDEN_CONTRACT_ADDRESS=0xYOUR_DEPLOYED_CONTRACT_ADDRESS
+```
+
+Rerun **Deploy GitHub Pages** from the Actions tab. The workflow also runs on pushes to `main`, installs dependencies, runs tests, and publishes the build. All visitors then use the configured contract.
+
+### Other static hosting
+
+Create `.env.production.local`:
+
+```dotenv
+VITE_GARDEN_CONTRACT_ADDRESS=0xYOUR_DEPLOYED_CONTRACT_ADDRESS
+VITE_GARDEN_RPC_URL=https://sepolia.base.org
+```
+
+Then validate the deployment and build:
+
+```sh
+npm run build:submission
+```
+
+Publish the resulting `dist/` directory. For a local production preview, run `npm run preview -- --port 5175`.
+
+[Base network settings](https://docs.base.org/get-started/connect-to-base) · [Test ETH](https://docs.base.org/get-started/get-funds) · [Base Sepolia explorer](https://sepolia.basescan.org)
 
 ## Validation
 
 ```sh
-npm test
-npm run build
-npm run check:deployment
+npm test                  # Model, contract, and wallet tests
+npm run build             # Compile the contract and frontend
+npm run check:deployment  # Verify the configured public contract
 ```
 
-Tests execute the real contract in an isolated EVM. They cover invalid input, owner separation, duplicate planting/watering, UTC rollover, streak gaps, growth milestones, history pagination, ETH rejection, fresh-client reads, wallet rejection, concurrent requests, account changes, and reconnect. Legacy demo tests remain separate from onchain behavior.
+Tests cover input validation, wallet ownership, duplicate watering, UTC rollover, growth milestones, streaks, history pagination, rejected signatures, account changes, and reconnection.
 
-`check:deployment` and `build:submission` fail when a public deployment has not been configured. A successful local test or ordinary build does not mean the public testnet deployment is complete.
+`check:deployment` and `build:submission` require a configured public deployment. A successful regular build does not mean the smart contract is deployed.
 
-## Scope and limitations
+For contract source verification, use Solidity **0.8.30**, optimizer **200 runs**, and EVM target **Shanghai**. Compilation produces `artifacts/compiler-input.json`.
 
-Base Sepolia is a test network. Each write requires a wallet approval and test ETH for gas. Names and care history are public and immutable except that the current name can be updated; past events remain visible. One wallet represents one garden, not a verified person. Data availability depends on the selected network and RPC. The contract is not independently audited and is intended for this testnet project.
+## Source map
 
-## Product and design
+| Path | Purpose |
+| --- | --- |
+| `contracts/TinySprout.sol` | Ownership, planting, watering, names, and history |
+| `src/sproutService.ts` | Wallet sessions, transactions, and recovery |
+| `src/chain/readGarden.ts` | Consistent reads from a single block |
+| `src/gardenModel.ts` | Growth, streaks, and calendar calculations |
+| `src/GardenCare.tsx` | Plant illustrations and care interface |
+| `tests/` | Model, EVM, and wallet integration tests |
+| `submission-assets/` | Logo, cover, and screenshots |
 
-- [Product plan](./PROJECT_PLAN.md)
-- [UI guide](./DESIGN.md)
+## Notes and credits
 
-Caveat and DM Sans are bundled through Fontsource under their respective licenses. The sprout illustration is AI-generated. Code and design implementation were assisted by Codex.
+This is a testnet project. Writes require wallet approval and test ETH for gas. Names and care records are public; renaming changes the current name but does not erase past events. The contract has not been independently audited.
 
-## GitHub Pages
-
-The site is published at https://ukii0.github.io/ethglobaltokyo2026-tiny/ by `.github/workflows/deploy.yml` on pushes to `main`. The workflow runs tests and builds the app for the repository subpath.
-
-Set the repository Actions variable `VITE_GARDEN_CONTRACT_ADDRESS` to the deployed Base Sepolia contract address and rerun the workflow to share the same garden contract with all visitors. Until configured, the site opens with the contract setup flow; website deployment does not deploy the smart contract.
+Caveat and DM Sans are bundled under their respective licenses. Raster illustrations, the logo, and the cover were created with AI image generation. Code and design implementation were assisted by Codex.
