@@ -1,0 +1,37 @@
+{
+  "name": "tiny-sprout",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "npm run contract:compile && tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "npm run contract:compile && node --import tsx --test tests/*.test.ts",
+    "contract:compile": "node scripts/compile.mjs",
+    "chain:local": "node scripts/local-chain.mjs",
+    "test:contract": "node --import tsx --test tests/contract.test.ts",
+    "check:deployment": "node scripts/check-deployment.mjs",
+    "build:submission": "npm run check:deployment && npm run build"
+  },
+  "dependencies": {
+    "@fontsource-variable/caveat": "^5.2.7",
+    "@fontsource-variable/dm-sans": "^5.2.8",
+    "lucide-react": "^0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "viem": "^2.56.9"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "esbuild": "^0.28.2",
+    "ganache": "^7.9.2",
+    "solc": "^0.8.30",
+    "tsx": "^4.23.13",
+    "typescript": "~5.7.2",
+    "vite": "^6.1.0"
+  }
+}

@@ -1,0 +1,261 @@
+@import url('./tokens.css');
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--yellow); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+button, input { font: inherit; }
+button, a, label { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; color: inherit; }
+button:disabled { cursor: wait; opacity: .65; }
+button, a, input { outline-offset: 5px; }
+:focus-visible { outline: 3px solid var(--ink); }
+a { color: inherit; }
+.hand { font-family: var(--font-hand); font-weight: 700; }
+.site-shell { max-width: 1440px; margin: 0 auto; padding: 0 64px; }
+.header { height: 105px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1.5px solid var(--line); }
+.brand { display: flex; gap: 9px; align-items: center; text-decoration: none; }
+.brand .hand { font-size: 41px; line-height: 1; letter-spacing: -1.5px; }
+.brand-period { margin-left: 2px; }
+nav { display: flex; gap: 32px; align-items: center; }
+.help-link { border: 0; background: transparent; display: flex; gap: 8px; align-items: center; font-size: 14px; font-weight: 500; padding: 12px 0; }
+.help-link:hover { text-decoration: underline; text-underline-offset: 5px; }
+.wallet-button { padding: 12px 18px; border: 1.5px solid var(--ink); border-radius: 7px; background: transparent; display: flex; gap: 9px; align-items: center; font-size: 14px; font-weight: 600; transition: background .2s, transform .2s; }
+.wallet-button:hover { background: var(--paper); transform: translateY(-2px); }
+.garden { display: grid; grid-template-columns: minmax(0,1.45fr) minmax(330px,1fr); gap: 74px; padding: 49px 25px 5px 11px; align-items: center; }
+.garden-story { min-width: 0; }
+.eyebrow { font-size: 11px; font-weight: 650; letter-spacing: 1.65px; display: flex; align-items: center; gap: 9px; }
+.little-line { display: inline-block; width: 23px; height: 2px; background: var(--ink); transform: rotate(-8deg); }
+h1 { font-size: clamp(65px,6.2vw,88px); line-height: .96; letter-spacing: -2.3px; margin: 20px 0 20px; font-weight: 700; }
+.headline-second { display: inline-block; transform: rotate(-2deg); transform-origin: left; }
+.intro { font-size: 16px; line-height: 1.65; margin: 0; }
+.illustration-stage { height: 337px; position: relative; display: flex; justify-content: center; align-items: center; padding-left: 36px; }
+.hero-plant { width: 340px; height: 340px; animation: welcome .4s ease-out both; }
+.plant-art { position: relative; width: 100%; height: 100%; }
+.plant-art img { width: 100%; height: 100%; object-fit: contain; display: block; filter: contrast(1.14); }
+.plant-art--small { width: 90px; height: 90px; }
+.side-note { position: absolute; left: 0; top: 96px; font-size: 26px; font-weight: 600; transform: rotate(-9deg); line-height: 1; }
+.curved-arrow { font-size: 62px; position: absolute; top: 20px; left: 58px; transform: rotate(-35deg); }
+.sparkle { position: absolute; line-height: 1; }
+.sparkle-one { top: 44px; left: 30%; font-size: 36px; transform: rotate(12deg); }
+.sparkle-two { top: 152px; right: 48px; font-size: 44px; }
+.plant-caption { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%) rotate(-3deg); white-space: nowrap; font-size: 25px; font-weight: 600; }
+.stamp { position: absolute; right: -25px; top: 0; width: 92px; height: 92px; border: 1.5px solid var(--ink); border-radius: 50%; text-align: center; display: flex; align-items: center; justify-content: center; flex-direction: column; font-size: 23px; line-height: .85; transform: rotate(11deg); gap: 4px; }
+.workbench { padding-top: 4px; }
+.paper-card { border: 2px solid var(--ink); background: var(--paper); border-radius: 15px 12px 17px 11px; box-shadow: 7px 7px 0 var(--ink); padding: 25px 28px 0; position: relative; }
+.card-topline { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 10px; font-weight: 600; letter-spacing: 1.4px; }
+.card-title { font-size: 49px; line-height: 1.1; margin: 21px 0 10px; letter-spacing: -.7px; }
+.card-title:focus { outline: none; }
+.card-description { font-size: 14px; line-height: 1.65; margin: 0; color: var(--muted); }
+.pot-options { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; border: 0; padding: 0; margin: 28px 0 0; min-width: 0; }
+.pot-option { cursor: pointer; position: relative; text-align: center; }
+.pot-option input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.pot-thumbnail { height: 108px; border: 1.5px solid #deddd6; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: #f7f6ef; position: relative; transition: transform .2s, background .2s; }
+.is-selected .pot-thumbnail { background: var(--soft-yellow); border: 2px solid var(--ink); }
+.pot-option:hover .pot-thumbnail { transform: translateY(-3px) rotate(-2deg); }
+.pot-option:has(input:focus-visible) .pot-thumbnail { outline: 3px solid var(--ink); outline-offset: 4px; }
+.selection-check { position: absolute; right: -5px; top: -7px; width: 21px; height: 21px; background: var(--ink); color: var(--paper); border-radius: 50%; display: grid; place-items: center; }
+.pot-name { display: block; font-size: 25px; margin-top: 8px; font-weight: 600; }
+.pot-description { text-align: center; font-size: 12px; color: var(--muted); margin: 15px 0 24px; min-height: 18px; }
+.primary-button { width: 100%; min-height: 52px; display: flex; justify-content: center; align-items: center; gap: 18px; padding: 14px 16px; font-weight: 600; font-size: 14px; color: var(--paper); background: var(--ink); border: 2px solid var(--ink); border-radius: 7px; transition: transform .15s, box-shadow .15s; }
+.primary-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 3px 3px 0 var(--yellow); }
+.primary-button:active:not(:disabled) { transform: translateY(1px); }
+.no-pressure { display: flex; justify-content: center; align-items: center; gap: 6px; font-size: 10px; color: var(--muted); margin: 13px 0 24px; }
+.card-foot { border-top: 1px dashed #c4c2b8; padding: 17px 0; display: flex; gap: 9px; align-items: center; font-size: 10px; color: var(--muted); }
+.demo-tag { border: 1px solid #b9b7ac; border-radius: 4px; padding: 3px 5px; font-size: 9px; font-weight: 600; line-height: 1; letter-spacing: .8px; color: var(--ink); }
+.below-card { font-size: 23px; font-weight: 600; margin: 22px -10px 0 0; display: flex; align-items: center; justify-content: center; gap: 10px; transform: rotate(-3deg); }
+.journey { margin-top: 34px; padding: 32px 10px 29px; border-top: 1.5px dashed var(--line); display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.journey > div { display: flex; gap: 14px; align-items: center; }
+.step-number { font-size: 39px; font-weight: 600; line-height: 1; }
+.journey strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.journey strong + span { font-size: 11px; color: #575038; display: block; }
+.journey-arrow { font-family: var(--font-hand); font-size: 43px; font-weight: 400; }
+.footer { display: flex; justify-content: space-between; align-items: center; padding: 18px 0 24px; border-top: 1px solid var(--line); font-size: 10px; gap: 18px; color: #5a5135; }
+.footer > span:first-child { display: flex; gap: 6px; align-items: center; }
+.footer-note { font-size: 20px; font-weight: 600; color: var(--ink); }
+.dialog { color: var(--ink); width: min(440px,calc(100% - 32px)); border: 2px solid var(--ink); border-radius: 15px; background: var(--paper); box-shadow: 8px 8px 0 var(--ink); padding: 0; max-height: calc(100dvh - 48px); }
+.dialog::backdrop { background: #26252280; backdrop-filter: blur(4px); }
+.dialog-inner { padding: 38px 30px 24px; position: relative; }
+.dialog h2 { font-size: 41px; line-height: 1.1; margin: 8px 15px 18px 0; }
+.dialog p { font-size: 15px; line-height: 1.7; color: var(--muted); }
+.icon-button { width: 33px; height: 33px; display: grid; place-items: center; background: transparent; border: none; border-radius: 5px; }
+.icon-button:hover { background: var(--soft-yellow); }
+.modal-close { position: absolute; right: 10px; top: 10px; }
+.dialog-icon { width: 62px; height: 62px; border: 1.5px solid var(--ink); background: var(--yellow); border-radius: 14px; display: grid; place-items: center; transform: rotate(-4deg); margin: 22px 0; }
+.notice { display: flex; align-items: flex-start; gap: 9px; background: #f0eee5; padding: 14px; border-radius: 7px; font-size: 12px; line-height: 1.65; margin: 20px 0; }
+.notice svg { flex-shrink: 0; margin-top: 2px; }
+.text-button { border: 0; background: transparent; padding: 15px 5px 0; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
+.approval-pot { display: flex; align-items: center; gap: 15px; }
+.approval-pot > .hand { font-size: 34px; }
+.approval-summary { display: grid; grid-template-columns: 1fr auto; gap: 11px; border-top: 1px dashed #ccc; padding: 17px 0 23px; font-size: 13px; }
+.help-steps { padding-left: 22px; font-size: 14px; line-height: 1.7; }
+.help-steps li { padding-left: 3px; margin: 14px 0; }
+.planting-content { text-align: center; padding: 47px 0 38px; min-height: 383px; }
+.planting-content .card-title { font-size: 40px; }
+.spinner-ring { width: 70px; height: 70px; border-radius: 50%; margin: 0 auto 30px; display: grid; place-items: center; background: var(--yellow); }
+.spinner-ring svg, .spin { animation: spin 1.5s linear infinite; }
+.progress-track { height: 7px; border: 1px solid var(--ink); border-radius: 8px; overflow: hidden; margin: 29px 0 10px; }
+.progress-track div { background: var(--yellow); height: 100%; width: 95%; animation: progress 1.8s ease-out; }
+.progress-label { font-size: 12px; color: var(--muted); }
+.is-planting .hero-plant { animation: breathing .8s ease-in-out infinite alternate; }
+.is-saved .hero-plant { animation: sprouted .7s cubic-bezier(.2,.8,.4,1.4); }
+.saved-record { display: grid; gap: 13px; border-top: 1px dashed #ccc; border-bottom: 1px dashed #ccc; margin: 24px 0 18px; padding: 18px 0; }
+.saved-record > div { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 13px; }
+.saved-record .hand { font-size: 28px; line-height: 1; }
+.saved-record strong:not(.hand) { font-weight: 500; }
+.saved-status { font-size: 12px; display: flex; align-items: center; gap: 7px; margin-bottom: 22px; }
+.restart-button { margin-bottom: 24px; }
+.error-message { color: #a52c25 !important; font-size: 13px !important; line-height: 1.5 !important; margin: 14px 0 !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.skip-link { position: absolute; top: -100px; padding: 12px 20px; background: var(--ink); color: white; z-index: 5; }
+.skip-link:focus { top: 8px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes progress { from { width: 0; } to { width: 95%; } }
+@keyframes welcome { from { opacity: .5; transform: rotate(-5deg); } to { opacity: 1; transform: rotate(0); } }
+@keyframes breathing { from { transform: translateY(0) rotate(-3deg); } to { transform: translateY(-10px) rotate(3deg); } }
+@keyframes sprouted { from { transform: translateY(20px) scale(.9); } to { transform: translateY(0) scale(1); } }
+@media (min-width: 1450px) { .garden { padding-top: 62px; gap: 96px; } .illustration-stage { height: 385px; } .hero-plant { height: 380px; width: 380px; } .workbench { max-width: 425px; } }
+@media (max-width: 1100px) { .site-shell { padding: 0 35px; } .garden { gap: 36px; padding-left: 0; padding-right: 6px; } h1 { font-size: 68px; } .stamp { right: -6px; width: 78px; height: 78px; font-size: 20px; } .side-note { font-size: 23px; left: -5px; } .hero-plant { width: 290px; height: 290px; } .illustration-stage { height: 320px; padding-left: 23px; } .paper-card { padding-right: 20px; padding-left: 20px; } .journey { gap: 10px; } .journey-arrow { font-size: 30px; } .journey > div { gap: 8px; } }
+@media (max-width: 820px) { .site-shell { padding: 0 24px; max-width: 650px; } .header { height: 87px; } nav { gap: 15px; } .help-link { font-size: 0; gap: 0; } .help-link svg { width: 22px; height: 22px; } .brand .hand { font-size: 35px; } .brand svg { width: 26px; } .wallet-button { padding: 10px 12px; font-size: 12px; } .garden { display: flex; flex-direction: column; gap: 33px; padding: 38px 0 0; } .garden-story { width: 100%; } .eyebrow { justify-content: center; font-size: 10px; } h1 { font-size: 72px; text-align: center; margin-top: 22px; } .headline-second { transform-origin: center; } .intro { text-align: center; font-size: 15px; } .illustration-stage { height: 290px; padding-left: 0; margin: 12px auto 0; max-width: 470px; } .hero-plant { height: 295px; width: 295px; } .side-note { left: 5px; top: 99px; } .stamp { right: 10px; top: 5px; } .sparkle-one { left: 18%; top: 44px; font-size: 26px; } .sparkle-two { right: 20px; top: 170px; font-size: 37px; } .workbench { width: 100%; max-width: 420px; } .paper-card { padding-left: 27px; padding-right: 27px; } .below-card { font-size: 24px; } .journey { margin-top: 39px; padding: 25px 9px; gap: 21px; flex-direction: column; align-items: flex-start; } .journey-arrow { display: none; } .journey strong { font-size: 14px; } .journey strong + span { font-size: 13px; } .step-number { width: 33px; text-align: center; } .journey > div { gap: 16px; } .footer { justify-content: center; flex-wrap: wrap; gap: 10px 25px; padding-bottom: 25px; } .footer-note { width: 100%; text-align: center; margin-top: 4px; } }
+@media (max-width: 420px) { .site-shell { padding: 0 19px; } .brand { gap: 5px; } .brand .hand { font-size: 31px; } .brand svg { width: 23px; } nav { gap: 10px; } .wallet-button { gap: 6px; padding: 10px; font-size: 11px; } .wallet-button svg { width: 15px; } h1 { font-size: 60px; } .eyebrow { font-size: 9px; letter-spacing: 1.3px; } .intro { font-size: 14px; } .side-note { font-size: 21px; left: 0; top: 107px; } .curved-arrow { font-size: 45px; left: 32px; } .stamp { width: 65px; height: 65px; font-size: 18px; right: 0; } .stamp svg { width: 13px; height: 13px; } .hero-plant { width: 265px; height: 265px; } .illustration-stage { height: 265px; } .sparkle-two { right: 0; font-size: 31px; } .paper-card { padding: 24px 20px 0; box-shadow: 5px 5px 0 var(--ink); } .pot-options { gap: 8px; } .pot-thumbnail { height: 100px; } .plant-art--small { width: 78px; height: 78px; } .pot-name { font-size: 23px; } .card-title { font-size: 45px; } }
+/* Readability stays consistent across both type families and breakpoints. */
+.eyebrow { font-size: 12px; letter-spacing: 1.2px; }
+.card-topline { font-size: 12px; letter-spacing: 1px; }
+.card-description { font-size: 16px; }
+.no-pressure, .card-foot, .footer { font-size: 12px; }
+.demo-tag { font-size: 12px; flex-shrink: 0; }
+.journey strong { font-size: 14px; }
+.journey strong + span { font-size: 13px; }
+.card-foot { align-items: flex-start; line-height: 1.5; }
+.no-pressure { text-align: center; line-height: 1.5; }
+.no-pressure svg { flex-shrink: 0; }
+@media (max-width: 420px) {
+  .brand .hand { font-size: 28px; }
+  .wallet-button { font-size: 13px; }
+  .wallet-button > svg:first-child { display: none; }
+  .eyebrow { font-size: 12px; letter-spacing: .6px; gap: 6px; }
+  .eyebrow .little-line { width: 14px; }
+  .intro { font-size: 16px; }
+  h1 { font-size: clamp(49px,15vw,60px); }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+
+/* Daily care: the same little paper world, with a reason to come back. */
+.name-field { margin: 18px 0 23px; }
+.name-field label { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; font-weight: 600; margin-bottom: 9px; }
+.name-field label span { font-weight: 400; color: var(--muted); font-size: 12px; }
+.name-field input { display: block; width: 100%; border: 1.5px solid #c8c6bb; border-radius: 7px; background: #fff; padding: 12px 13px; font-size: 16px; color: var(--ink); }
+.name-field input:focus { border-color: var(--ink); outline: 2px solid var(--yellow); outline-offset: 2px; }
+.name-field > span { display: block; margin-top: 7px; font-size: 12px; color: var(--muted); }
+.plant-art .plant-base { clip-path: inset(52% 0 0 0); }
+.plant-art .plant-canopy { position: absolute; inset: 0; clip-path: inset(0 0 46% 0); transform-origin: 50% 55%; transition: transform 1s cubic-bezier(.2,.8,.3,1); }
+.growth-sprout .plant-canopy { transform: scale(.56); }
+.growth-leafy .plant-canopy { transform: scale(1); }
+.growth-bloom .plant-canopy { transform: scale(1.04); }
+.bloom-flower { width: 48%; height: 54%; position: absolute; top: -1%; left: 27%; transform: rotate(5deg); transform-origin: 50% 95%; }
+.bloom-flower--pebble { transform: rotate(-7deg); }
+.bloom-flower--sunshine { transform: rotate(9deg); }
+.hero-plant { position: relative; }
+.water-drops { position: absolute; inset: 0; pointer-events: none; }
+.water-drops svg { position: absolute; left: 35%; top: 16%; width: 21px; height: 21px; fill: var(--paper); animation: little-shower .7s linear infinite; }
+.water-drops svg:nth-child(2) { left: 60%; animation-delay: .2s; }
+.water-drops svg:nth-child(3) { left: 47%; animation-delay: .4s; }
+.is-watering .hero-plant { animation: happy-wiggle 1s ease-in-out; }
+.plant-caption { max-width: 85%; text-align: center; overflow-wrap: anywhere; white-space: normal; line-height: 1.05; }
+.care-name-row { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
+.care-name-row .card-title { margin: 0; font-size: 45px; min-width: 0; flex: 1; overflow-wrap: anywhere; line-height: 1.08; }
+.rename-button { flex-shrink: 0; }
+.care-greeting { font-size: 14px; line-height: 1.6; color: var(--muted); margin: 9px 0 21px; }
+.growth-summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; }
+.growth-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; padding: 5px 8px; background: #eeede6; border-radius: 5px; }
+.growth-meter { height: 8px; background: #e8e6dc; border: 1px solid var(--ink); border-radius: 10px; margin: 12px 0 8px; overflow: hidden; }
+.growth-meter > span { display: block; height: 100%; background: var(--yellow); transition: width .7s ease; }
+.growth-hint { font-size: 12px; color: var(--muted); line-height: 1.5; margin: 0 0 24px; }
+.growth-hint strong { font-weight: 600; color: var(--ink); }
+.care-week-header { display: flex; justify-content: space-between; gap: 6px; align-items: center; font-size: 12px; border-top: 1px dashed #c8c6bb; padding-top: 18px; }
+.streak-count { display: inline-flex; gap: 4px; align-items: center; }
+.care-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; margin: 14px 0 18px; }
+.care-day { display: flex; flex-direction: column; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); }
+.care-day-mark { width: 31px; height: 33px; border: 1px solid #dad8cf; border-radius: 7px; display: grid; place-items: center; font-size: 12px; }
+.care-day.is-today .care-day-mark { border: 1.5px solid var(--ink); color: var(--ink); }
+.care-day.is-watered .care-day-mark { background: var(--yellow); border-color: var(--ink); color: var(--ink); }
+.today-mark { font-size: 12px; height: 13px; color: var(--ink); }
+.water-button:disabled { cursor: default; }
+.water-button.is-done { background: var(--soft-yellow); color: var(--ink); opacity: 1; }
+.care-feedback { text-align: center; min-height: 42px; font-size: 12px; color: var(--muted); line-height: 1.6; padding: 10px 0 2px; }
+.journal-link { display: flex; justify-content: center; align-items: center; gap: 5px; border: 0; background: none; font-size: 13px; margin: 0 auto 17px; padding: 7px; text-decoration: underline; text-underline-offset: 4px; }
+.garden--saved { padding-bottom: 25px; }
+.growth-journey { border-top: 1.5px dashed var(--line); margin-top: 31px; padding: 23px 0 28px; }
+.growth-journey-title { display: flex; justify-content: space-between; align-items: baseline; gap: 15px; margin-bottom: 17px; }
+.growth-journey-title .hand { font-size: 31px; }
+.growth-journey-title p { font-size: 12px; color: #575038; margin: 0; }
+.milestones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 25px; }
+.milestone { background: transparent; display: flex; align-items: center; gap: 12px; border: 1px solid transparent; border-radius: 10px; padding: 10px 12px; text-align: left; }
+.milestone:hover { background: #fffef850; border-color: #26252250; }
+.milestone.is-current { border: 1.5px solid var(--ink); }
+.milestone > span:nth-child(2) { flex: 1; min-width: 0; }
+.milestone strong { display: block; font-size: 27px; font-weight: 600; line-height: 1.1; }
+.milestone strong + span { display: block; font-size: 12px; margin-top: 5px; line-height: 1.4; }
+.milestone-icon { width: 39px; height: 44px; display: grid; place-items: center; opacity: .65; flex-shrink: 0; }
+.milestone-icon.unlocked { opacity: 1; }
+.milestone > svg { flex-shrink: 0; }
+.journal-stats { display: grid; grid-template-columns: repeat(3,1fr); border-bottom: 1px dashed #c8c6bb; padding: 5px 0 18px; gap: 10px; }
+.journal-stats > div { display: flex; flex-direction: column; align-items: center; }
+.journal-stats strong { font-size: 38px; line-height: 1.2; }
+.journal-stats span { font-size: 12px; color: var(--muted); }
+.journal-entries { list-style: none; padding: 0; margin: 20px 0; max-height: 280px; overflow-y: auto; }
+.journal-entries li { display: flex; gap: 12px; align-items: center; margin: 16px 0; }
+.journal-entry-icon { width: 34px; height: 34px; background: var(--soft-yellow); border-radius: 8px; display: grid; place-items: center; flex-shrink: 0; }
+.journal-entries strong { display: block; font-size: 13px; font-weight: 500; }
+.journal-entries time { display: block; font-size: 12px; color: var(--muted); margin-top: 5px; }
+.journal-note { font-size: 12px !important; line-height: 1.6 !important; margin: 18px 0 !important; }
+.growth-preview-tabs { display: flex; gap: 8px; margin-top: 18px; }
+.growth-preview-tabs button { flex: 1; border: 1px solid #cbc9be; border-radius: 6px; background: transparent; padding: 10px 4px; font-size: 12px; }
+.growth-preview-tabs button[aria-pressed='true'] { background: var(--yellow); border-color: var(--ink); }
+.growth-preview-art { width: 240px; height: 240px; margin: 10px auto -5px; }
+.dialog .preview-stage-name { font-size: 32px; color: var(--ink); text-align: center; margin: 0; line-height: 1.2; }
+.dialog .preview-stage-note { font-size: 13px; text-align: center; margin: 8px 0 0; }
+@keyframes little-shower { from { opacity: 0; transform: translateY(0); } 20% { opacity: 1; } to { opacity: 0; transform: translateY(130px); } }
+@keyframes happy-wiggle { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-4deg); } 75% { transform: rotate(4deg); } }
+@media (max-width: 1100px) { .milestones { gap: 10px; } .milestone { padding: 9px 7px; gap: 7px; } .milestone strong { font-size: 24px; } }
+@media (max-width: 820px) { .growth-journey-title { display: block; } .growth-journey-title p { margin-top: 6px; line-height: 1.6; } .milestones { grid-template-columns: 1fr; gap: 7px; } .milestone { padding: 12px; gap: 15px; } .milestone strong { font-size: 28px; } .garden--saved { padding-bottom: 0; } }
+@media (max-width: 360px) { .care-week { gap: 2px; } .care-day-mark { width: 28px; } .care-week-header { font-size: 11px; } .care-name-row .card-title { font-size: 39px; } .growth-summary { align-items: flex-start; flex-direction: column; } .name-field label { flex-wrap: wrap; } }
+
+/* Onchain connection and transaction feedback */
+.network-strip { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 6px 0 20px; font-size: 12px; }
+.network-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink); }
+.network-strip button { border: 0; padding: 4px 6px; background: none; text-decoration: underline; font-size: 12px; }
+.transaction-notice { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; border: 1.5px solid var(--ink); border-radius: 9px; padding: 13px 18px; background: var(--paper); margin: 0 auto 18px; max-width: 720px; font-size: 13px; }
+.transaction-notice > span { display: flex; align-items: center; gap: 8px; }
+.transaction-notice a, .transaction-notice button { color: var(--ink); font: inherit; text-decoration: underline; background: none; border: 0; }
+.transaction-notice code { font-size: 11px; }
+.chain-details { display: grid; gap: 7px; margin: 24px 0; padding: 17px; background: #26252207; border: 1px dashed var(--line); border-radius: 8px; }
+.chain-details span { font-size: 12px; color: var(--muted); margin-top: 8px; }
+.chain-details code, .chain-details a { overflow-wrap: anywhere; font-size: 12px; line-height: 1.6; color: var(--ink); }
+.faucet-link { display: block; text-align: center; color: var(--ink); }
+button:disabled { cursor: not-allowed; }
+@media (max-width: 520px) { .network-strip { justify-content: flex-start; font-size: 11px; margin-top: 0; } .transaction-notice { padding: 12px; justify-content: flex-start; } }
+
+.plant-art--pebble img, .plant-art--sunshine img { filter: none; }
+
+.dialog .growth-demo-intro { font-size: 13px; margin: 10px 0 15px; }
+.preview-pot-picker { display: flex; gap: 8px; }
+.preview-pot-picker > button { display: flex; align-items: center; justify-content: center; gap: 5px; flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 8px; background: transparent; padding: 5px 2px; }
+.preview-pot-picker > button[aria-pressed='true'] { border: 1.5px solid var(--ink); background: var(--soft-yellow); }
+.preview-pot-picker .hand { font-size: 23px; }
+.preview-pot-mini, .preview-pot-mini .plant-art--small { display: block; width: 40px; height: 40px; }
+.growth-demo .growth-preview-art { width: 220px; height: 220px; margin: 8px auto; }
+.growth-demo .growth-preview-tabs button { display: grid; gap: 5px; }
+.growth-demo .growth-preview-tabs button span { font-size: 10px; color: var(--muted); }
+.preview-playback { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+.preview-playback .primary-button { flex: 1; margin: 0; justify-content: center; gap: 9px; }
+.preview-playback .icon-button { width: 44px; height: 44px; flex-shrink: 0; }
+.dialog .preview-only-note { text-align: center; font-size: 11px; line-height: 1.6; margin: 13px 0 0; color: var(--muted); }
+@media (max-width: 420px) { .preview-pot-picker > button { flex-direction: column; gap: 0; } .growth-demo .growth-preview-art { width: 190px; height: 190px; } .preview-pot-picker .hand { font-size: 21px; } }
+
+/* Keep spacing balanced after removing decorative microcopy. */
+.paper-card { padding-bottom: 28px; }
+.paper-card > .card-title, .care-name-row .card-title { margin-top: 0; }
+.paper-card .pot-options { margin-bottom: 26px; }
+.care-name-row { margin-bottom: 22px; }
+.growth-demo .preview-pot-picker { margin-top: 12px; }
+.growth-demo .preview-caption { margin-bottom: 18px; }
+.site-shell { padding-bottom: 24px; }
